@@ -1,0 +1,51 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: Makefile Simple
+scopeName: source.makefile-simple
+fileTypes: [mk Makefile makefile]
+uuid: 30c797d2-0b7c-4348-be6b-1d08fbcc1e9b
+
+patterns:
+- comment: Comments
+  name: comment
+  match: \#.*$
+
+- comment: Conditions
+  name: keyword
+  match: ^\s*(else\s+)(ifeq|ifneq|ifdef|ifndef|if)
+
+- comment: Conditions
+  name: keyword
+  match: ^\s*(else|endif)
+
+- comment: Variable affectation
+  match: ^\s*([^?:+!$()#]+)\s*((\?|:|::|\+|!)?\=)
+  captures:
+    '1': {name: variable.parameter}
+    '2': {name: keyword}
+
+- comment: Rule
+  match: ^\s*[^\$\(]+?\s*:\s*
+  name: entity.name.function
+
+- comment: Target
+  match: ^\s*(\$\()(.+?)(\)\s*:)\s*
+  captures:
+    '1': {name: entity.name.function}
+    '2': {name: variable.parameter}
+    '3': {name: entity.name.function}
+
+- comment: Includes
+  match: ^\s*\-?\s*include
+  name: support.function
+
+- comment: Functions
+  match: \$\((subst|patsubst|strip|findstring|filter|filter-out|sort|word|wordlist|words|firstword|lastword|dir|notdir|suffix|basename|addsuffix|addprefix|join|wildcard|realpath|abspath|if|or|and|foreach|file|call|value|eval|origin|flavor|error|warning|info|guile)
+  captures:
+    '1': {name: support.function}
+
+- comment: Variable
+  match: \$\(([^\):]+)(:[.*?]=[.*?])?\)
+  captures:
+    '1': {name: variable.parameter}
+...

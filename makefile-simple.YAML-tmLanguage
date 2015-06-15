@@ -1,7 +1,7 @@
 # [PackageDev] target_format: plist, ext: tmLanguage
 ---
-name: Makefile Simple
-scopeName: source.makefile-simple
+name: Makefile-Simple
+scopeName: source.Makefile-Simple
 fileTypes: [mk Makefile makefile]
 uuid: 30c797d2-0b7c-4348-be6b-1d08fbcc1e9b
 
@@ -12,7 +12,7 @@ patterns:
 
 - comment: Conditions
   name: keyword
-  match: ^\s*(else\s+)(ifeq|ifneq|ifdef|ifndef|if)
+  match: ^\s*(else\s+)?(ifeq|ifneq|ifdef|ifndef|if)
 
 - comment: Conditions
   name: keyword
@@ -24,12 +24,17 @@ patterns:
     '1': {name: variable.parameter}
     '2': {name: keyword}
 
+- comment: Functions
+  match: \$\((subst|patsubst|strip|findstring|filter|filter-out|sort|word|wordlist|words|firstword|lastword|dir|notdir|suffix|basename|addsuffix|addprefix|join|wildcard|realpath|abspath|if|or|and|foreach|file|call|value|eval|origin|flavor|error|warning|info|guile|shell)
+  captures:
+    '1': {name: support.function}
+
 - comment: Rule
-  match: ^\s*[^\$\(]+?\s*:\s*
+  match: ^\ *[^\$\(\t\#]+?\s*:\s*
   name: entity.name.function
 
 - comment: Target
-  match: ^\s*(\$\()(.+?)(\)\s*:)\s*
+  match: ^\ *(\$\()(.+?)(\)[^:\t ]*\s*:)\s*
   captures:
     '1': {name: entity.name.function}
     '2': {name: variable.parameter}
@@ -38,11 +43,6 @@ patterns:
 - comment: Includes
   match: ^\s*\-?\s*include
   name: support.function
-
-- comment: Functions
-  match: \$\((subst|patsubst|strip|findstring|filter|filter-out|sort|word|wordlist|words|firstword|lastword|dir|notdir|suffix|basename|addsuffix|addprefix|join|wildcard|realpath|abspath|if|or|and|foreach|file|call|value|eval|origin|flavor|error|warning|info|guile)
-  captures:
-    '1': {name: support.function}
 
 - comment: Variable
   match: \$\(([^\):]+)(:[.*?]=[.*?])?\)

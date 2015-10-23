@@ -4,17 +4,27 @@
 <dict>
 	<key>fileTypes</key>
 	<array>
-		<string>mk Makefile makefile</string>
+		<string>mk</string>
+		<string>Makefile</string>
+		<string>makefile</string>
 	</array>
 	<key>name</key>
 	<string>Makefile-Simple</string>
 	<key>patterns</key>
 	<array>
 		<dict>
+			<key>include</key>
+			<string>#mk_functions</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#mk_parenthesis</string>
+		</dict>
+		<dict>
 			<key>comment</key>
 			<string>Comments</string>
 			<key>match</key>
-			<string>\#.*$</string>
+			<string>(^|[^\\])\#.*$</string>
 			<key>name</key>
 			<string>comment</string>
 		</dict>
@@ -52,20 +62,6 @@
 			<string>Variable affectation</string>
 			<key>match</key>
 			<string>^\s*([^?:+!$()#]+)\s*((\?|:|::|\+|!)?\=)</string>
-		</dict>
-		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>support.function</string>
-				</dict>
-			</dict>
-			<key>comment</key>
-			<string>Functions</string>
-			<key>match</key>
-			<string>\$\((subst|patsubst|strip|findstring|filter|filter-out|sort|word|wordlist|words|firstword|lastword|dir|notdir|suffix|basename|addsuffix|addprefix|join|wildcard|realpath|abspath|if|or|and|foreach|file|call|value|eval|origin|flavor|error|warning|info|guile|shell)</string>
 		</dict>
 		<dict>
 			<key>comment</key>
@@ -108,6 +104,87 @@
 			<string>support.function</string>
 		</dict>
 		<dict>
+			<key>begin</key>
+			<string>"</string>
+			<key>comment</key>
+			<string>String</string>
+			<key>end</key>
+			<string>"</string>
+			<key>name</key>
+			<string>string</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#mk_variable</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#mk_variable</string>
+		</dict>
+	</array>
+	<key>repository</key>
+	<dict>
+		<key>mk_functions</key>
+		<dict>
+			<key>begin</key>
+			<string>(^\s*)?\$\((subst|patsubst|strip|findstring|filter|filter-out|sort|word|wordlist|words|firstword|lastword|dir|notdir|suffix|basename|addsuffix|addprefix|join|wildcard|realpath|abspath|if|or|and|foreach|file|call|value|eval|origin|flavor|error|warning|info|guile|shell)( )</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>support.function</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>Functions</string>
+			<key>end</key>
+			<string>\)</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#mk_parenthesis</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#mk_functions</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#mk_variable</string>
+				</dict>
+			</array>
+		</dict>
+		<key>mk_parenthesis</key>
+		<dict>
+			<key>begin</key>
+			<string>\(</string>
+			<key>end</key>
+			<string>\)</string>
+			<key>name</key>
+			<string>mk_parenthesis</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#mk_functions</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#mk_variable</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#mk_parenthesis</string>
+				</dict>
+			</array>
+		</dict>
+		<key>mk_variable</key>
+		<dict>
 			<key>captures</key>
 			<dict>
 				<key>1</key>
@@ -121,7 +198,7 @@
 			<key>match</key>
 			<string>\$\(([^\):]+)(:[.*?]=[.*?])?\)</string>
 		</dict>
-	</array>
+	</dict>
 	<key>scopeName</key>
 	<string>source.Makefile-Simple</string>
 	<key>uuid</key>

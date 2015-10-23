@@ -2,13 +2,16 @@
 ---
 name: Makefile-Simple
 scopeName: source.Makefile-Simple
-fileTypes: [mk Makefile makefile]
+fileTypes: [mk, Makefile, makefile]
 uuid: 30c797d2-0b7c-4348-be6b-1d08fbcc1e9b
 
 patterns:
+- include: '#mk_functions'
+- include: '#mk_parenthesis'
+
 - comment: Comments
   name: comment
-  match: \#.*$
+  match: (^|[^\\])\#.*$
 
 - comment: Conditions
   name: keyword
@@ -23,11 +26,6 @@ patterns:
   captures:
     '1': {name: variable.parameter}
     '2': {name: keyword}
-
-- comment: Functions
-  match: \$\((subst|patsubst|strip|findstring|filter|filter-out|sort|word|wordlist|words|firstword|lastword|dir|notdir|suffix|basename|addsuffix|addprefix|join|wildcard|realpath|abspath|if|or|and|foreach|file|call|value|eval|origin|flavor|error|warning|info|guile|shell)
-  captures:
-    '1': {name: support.function}
 
 - comment: Rule
   match: ^\ *[^\$\(\t\#]+?\s*:\s*
@@ -44,8 +42,40 @@ patterns:
   match: ^\s*\-?\s*include
   name: support.function
 
-- comment: Variable
-  match: \$\(([^\):]+)(:[.*?]=[.*?])?\)
-  captures:
-    '1': {name: variable.parameter}
+- comment: String
+  name: string
+  begin: '"'
+  patterns:
+    - include: '#mk_variable'
+  end: '"'
+
+- include: '#mk_variable'
+
+repository:
+  mk_variable:
+    comment: Variable
+    match: \$\(([^\):]+)(:[.*?]=[.*?])?\)
+    captures:
+      '1': {name: variable.parameter}
+
+  mk_parenthesis:
+    name: mk_parenthesis
+    begin: \(
+    patterns:
+      - include: '#mk_functions'
+      - include: '#mk_variable'
+      - include: '#mk_parenthesis'
+    end: \)
+
+  mk_functions:
+    comment: Functions
+    begin: (^\s*)?\$\((subst|patsubst|strip|findstring|filter|filter-out|sort|word|wordlist|words|firstword|lastword|dir|notdir|suffix|basename|addsuffix|addprefix|join|wildcard|realpath|abspath|if|or|and|foreach|file|call|value|eval|origin|flavor|error|warning|info|guile|shell)( )
+    beginCaptures:
+      '2': {name: support.function}
+    patterns:
+      - include: '#mk_parenthesis'
+      - include: '#mk_functions'
+      - include: '#mk_variable'
+    end: \)
+
 ...

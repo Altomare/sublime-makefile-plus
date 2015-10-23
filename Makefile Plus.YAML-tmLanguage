@@ -1,8 +1,12 @@
 # [PackageDev] target_format: plist, ext: tmLanguage
 ---
-name: Makefile-Simple
-scopeName: source.Makefile-Simple
-fileTypes: [mk, Makefile, makefile]
+name: Makefile Plus
+scopeName: source.Makefile-Plus
+fileTypes:
+- mk
+- Makefile
+- makefile
+- make
 uuid: 30c797d2-0b7c-4348-be6b-1d08fbcc1e9b
 
 patterns:

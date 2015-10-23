@@ -6,10 +6,11 @@
 	<array>
 		<string>mk</string>
 		<string>Makefile</string>
-		<string>makefile</string>
+		<string>Makefile</string>
+		<string>make</string>
 	</array>
 	<key>name</key>
-	<string>Makefile-Simple</string>
+	<string>Makefile Plus</string>
 	<key>patterns</key>
 	<array>
 		<dict>
@@ -200,7 +201,7 @@
 		</dict>
 	</dict>
 	<key>scopeName</key>
-	<string>source.Makefile-Simple</string>
+	<string>source.Makefile-Plus</string>
 	<key>uuid</key>
 	<string>30c797d2-0b7c-4348-be6b-1d08fbcc1e9b</string>
 </dict>

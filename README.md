@@ -1,5 +1,5 @@
 # Makefile Plus
-A simple Makefile syntax for Sublime Text 3
+A simple yet effective Makefile syntax for Sublime Text
 
 ### Manual Installation
 In order to install this syntax, copy the `makefile-plus.tmLanguage` file into your `Packages/User` directory.

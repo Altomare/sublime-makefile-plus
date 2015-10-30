@@ -25,7 +25,7 @@
 			<key>comment</key>
 			<string>Comments</string>
 			<key>match</key>
-			<string>(?&lt;\\)\#.*$</string>
+			<string>(?&lt;!\\)\#.*$</string>
 			<key>name</key>
 			<string>comment</string>
 		</dict>

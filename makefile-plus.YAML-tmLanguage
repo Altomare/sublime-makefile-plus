@@ -15,7 +15,7 @@ patterns:
 
 - comment: Comments
   name: comment
-  match: (?<\\)\#.*$
+  match: (?<!\\)\#.*$
 
 - comment: Conditions
   name: keyword

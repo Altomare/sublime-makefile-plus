@@ -58,9 +58,11 @@ patterns:
 repository:
   mk_variable:
     comment: Variable
-    match: \$\(([^\):]+)(:[.*?]=[.*?])?\)
+    match: \$\(([^\):]+)(?:(:).*?(=).*?)?\)
     captures:
       '1': {name: variable.parameter}
+      '2': {name: keyword}
+      '3': {name: keyword}
 
   mk_parenthesis:
     name: mk_parenthesis

@@ -26,10 +26,14 @@ patterns:
   match: ^\s*(else|endif)
 
 - comment: Variable affectation
-  match: ^\s*([^?:+!$()#]+)\s*((\?|:|::|\+|!)?\=)
+  begin: ^\s*([^?:+!$()#]+)\s*((\?|:|::|\+|!)?\=)
   captures:
     '1': {name: variable.parameter}
     '2': {name: keyword}
+  patterns:
+    - include: '#mk_variable'
+    - include: '#mk_functions'
+  end: '(?<!\\)\n'
 
 - comment: Rule
   match: ^\ *[^\$\(\t\#]+?\s*:\s*

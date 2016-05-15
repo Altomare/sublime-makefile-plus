@@ -117,9 +117,22 @@
 			<key>include</key>
 			<string>#mk_variable</string>
 		</dict>
+		<dict>
+			<key>include</key>
+			<string>#mk_autovar</string>
+		</dict>
 	</array>
 	<key>repository</key>
 	<dict>
+		<key>mk_autovar</key>
+		<dict>
+			<key>comment</key>
+			<string>Automatic variables</string>
+			<key>match</key>
+			<string>\$[\@\%\&lt;\?\^\+\|\*]</string>
+			<key>name</key>
+			<string>support.constant</string>
+		</dict>
 		<key>mk_functions</key>
 		<dict>
 			<key>begin</key>

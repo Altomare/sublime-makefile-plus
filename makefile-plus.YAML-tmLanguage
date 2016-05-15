@@ -51,6 +51,7 @@ patterns:
   end: '\ *\:(?=.*?$)'
 
 - include: '#mk_variable'
+- include: '#mk_autovar'
 
 repository:
   mk_variable:
@@ -80,5 +81,10 @@ repository:
       - include: '#mk_functions'
       - include: '#mk_variable'
     end: \)
+
+  mk_autovar:
+    comment: Automatic variables
+    match: '\$[\@\%\<\?\^\+\|\*]'
+    name: support.constant
 
 ...

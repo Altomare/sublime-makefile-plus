@@ -22,10 +22,12 @@
 			<string>#mk_parenthesis</string>
 		</dict>
 		<dict>
+			<key>begin</key>
+			<string>(?&lt;!\\)\#</string>
 			<key>comment</key>
 			<string>Comments</string>
-			<key>match</key>
-			<string>(?&lt;!\\)\#.*$</string>
+			<key>end</key>
+			<string>(?&lt;!\\)\n</string>
 			<key>name</key>
 			<string>comment</string>
 		</dict>
@@ -69,45 +71,13 @@
 			<array>
 				<dict>
 					<key>include</key>
-					<string>#mk_variable</string>
+					<string>#mk_functions</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#mk_functions</string>
+					<string>#mk_variable</string>
 				</dict>
 			</array>
-		</dict>
-		<dict>
-			<key>comment</key>
-			<string>Rule</string>
-			<key>match</key>
-			<string>^\ *[^\$\(\t\#]+?\s*:\s*</string>
-			<key>name</key>
-			<string>entity.name.function</string>
-		</dict>
-		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>entity.name.function</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>variable.parameter</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>entity.name.function</string>
-				</dict>
-			</dict>
-			<key>comment</key>
-			<string>Target</string>
-			<key>match</key>
-			<string>^\ *(\$\()(.+?)(\)[^:\t ]*\s*:)\s*</string>
 		</dict>
 		<dict>
 			<key>comment</key>
@@ -126,6 +96,23 @@
 			<string>"</string>
 			<key>name</key>
 			<string>string</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#mk_variable</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>^(?!\t)\ *(?=([^\:\n\#\s]|(?&lt;=\\)\#)+\ *\:(?!\=).*?$)</string>
+			<key>comment</key>
+			<string>Rule</string>
+			<key>end</key>
+			<string>\ *\:(?=.*?$)</string>
+			<key>name</key>
+			<string>entity.name.function</string>
 			<key>patterns</key>
 			<array>
 				<dict>

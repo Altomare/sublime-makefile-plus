@@ -15,7 +15,8 @@ patterns:
 
 - comment: Comments
   name: comment
-  match: (?<!\\)\#.*$
+  begin: (?<!\\)\#
+  end: '(?<!\\)\n'
 
 - comment: Conditions
   name: keyword
@@ -31,20 +32,9 @@ patterns:
     '1': {name: variable.parameter}
     '2': {name: keyword}
   patterns:
-    - include: '#mk_variable'
     - include: '#mk_functions'
+    - include: '#mk_variable'
   end: '(?<!\\)\n'
-
-- comment: Rule
-  match: ^\ *[^\$\(\t\#]+?\s*:\s*
-  name: entity.name.function
-
-- comment: Target
-  match: ^\ *(\$\()(.+?)(\)[^:\t ]*\s*:)\s*
-  captures:
-    '1': {name: entity.name.function}
-    '2': {name: variable.parameter}
-    '3': {name: entity.name.function}
 
 - comment: Includes
   match: ^\s*\-?\s*include
@@ -56,6 +46,13 @@ patterns:
   patterns:
     - include: '#mk_variable'
   end: '"'
+
+- comment: Rule
+  begin: '^(?!\t)\ *(?=([^\:\n\#\s]|(?<=\\)\#)+\ *\:(?!\=).*?$)'
+  name: entity.name.function
+  patterns:
+    - include: '#mk_variable'
+  end: '\ *\:(?=.*?$)'
 
 - include: '#mk_variable'
 

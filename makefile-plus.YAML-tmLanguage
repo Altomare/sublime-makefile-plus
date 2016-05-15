@@ -20,14 +20,10 @@ patterns:
 
 - comment: Conditions
   name: keyword
-  match: ^\s*(else\s+)?(ifeq|ifneq|ifdef|ifndef|if)
-
-- comment: Conditions
-  name: keyword
-  match: ^\s*(else|endif)
+  match: ^\s*((else\s+)?(ifeq|ifneq|ifdef|ifndef|if)|else|endif)
 
 - comment: Variable affectation
-  begin: ^\s*([^?:+!$()#]+)\s*((\?|:|::|\+|!)?\=)
+  begin: ^\s*([^?:+!#]+)\s*((\?|:|::|\+|!)?\=)
   captures:
     '1': {name: variable.parameter}
     '2': {name: keyword}

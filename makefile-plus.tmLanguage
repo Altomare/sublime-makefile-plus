@@ -35,21 +35,13 @@
 			<key>comment</key>
 			<string>Conditions</string>
 			<key>match</key>
-			<string>^\s*(else\s+)?(ifeq|ifneq|ifdef|ifndef|if)</string>
-			<key>name</key>
-			<string>keyword</string>
-		</dict>
-		<dict>
-			<key>comment</key>
-			<string>Conditions</string>
-			<key>match</key>
-			<string>^\s*(else|endif)</string>
+			<string>^\s*((else\s+)?(ifeq|ifneq|ifdef|ifndef|if)|else|endif)</string>
 			<key>name</key>
 			<string>keyword</string>
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^\s*([^?:+!$()#]+)\s*((\?|:|::|\+|!)?\=)</string>
+			<string>^\s*([^?:+!#]+)\s*((\?|:|::|\+|!)?\=)</string>
 			<key>captures</key>
 			<dict>
 				<key>1</key>

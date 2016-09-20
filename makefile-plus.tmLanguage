@@ -41,7 +41,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^\s*([^?:+!#]+)\s*((\?|:|::|\+|!)?\=)</string>
+			<string>^\s*([^?:+!#\s]+)\s*((\?|:|::|\+|!)?\=)</string>
 			<key>captures</key>
 			<dict>
 				<key>1</key>
@@ -69,6 +69,10 @@
 					<key>include</key>
 					<string>#mk_variable</string>
 				</dict>
+				<dict>
+					<key>include</key>
+					<string>#mk_string</string>
+				</dict>
 			</array>
 		</dict>
 		<dict>
@@ -81,18 +85,40 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>"</string>
+			<string>^\t[\ \t]*(@?)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword</string>
+				</dict>
+			</dict>
 			<key>comment</key>
-			<string>String</string>
+			<string>Command</string>
 			<key>end</key>
-			<string>"</string>
-			<key>name</key>
-			<string>string</string>
+			<string>(?&lt;!\\)\n</string>
 			<key>patterns</key>
 			<array>
 				<dict>
 					<key>include</key>
+					<string>#mk_comment</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#mk_functions</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#mk_variable</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#mk_string</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#mk_autovar</string>
 				</dict>
 			</array>
 		</dict>
@@ -121,6 +147,10 @@
 			<key>include</key>
 			<string>#mk_autovar</string>
 		</dict>
+		<dict>
+			<key>include</key>
+			<string>#mk_string</string>
+		</dict>
 	</array>
 	<key>repository</key>
 	<dict>
@@ -132,6 +162,15 @@
 			<string>\$[\@\%\&lt;\?\^\+\|\*]</string>
 			<key>name</key>
 			<string>support.constant</string>
+		</dict>
+		<key>mk_comment</key>
+		<dict>
+			<key>begin</key>
+			<string>(?&lt;!\\)\#</string>
+			<key>end</key>
+			<string>(?&lt;!\\)\n</string>
+			<key>name</key>
+			<string>comment</string>
 		</dict>
 		<key>mk_functions</key>
 		<dict>
@@ -186,6 +225,22 @@
 				<dict>
 					<key>include</key>
 					<string>#mk_parenthesis</string>
+				</dict>
+			</array>
+		</dict>
+		<key>mk_string</key>
+		<dict>
+			<key>begin</key>
+			<string>"</string>
+			<key>end</key>
+			<string>"</string>
+			<key>name</key>
+			<string>string</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#mk_variable</string>
 				</dict>
 			</array>
 		</dict>

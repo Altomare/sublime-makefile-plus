@@ -23,25 +23,31 @@ patterns:
   match: ^\s*((else\s+)?(ifeq|ifneq|ifdef|ifndef|if)|else|endif)
 
 - comment: Variable affectation
-  begin: ^\s*([^?:+!#]+)\s*((\?|:|::|\+|!)?\=)
+  begin: ^\s*([^?:+!#\s]+)\s*((\?|:|::|\+|!)?\=)
   captures:
     '1': {name: variable.parameter}
     '2': {name: keyword}
   patterns:
     - include: '#mk_functions'
     - include: '#mk_variable'
+    - include: '#mk_string'
   end: '(?<!\\)\n'
 
 - comment: Includes
   match: ^\s*\-?\s*include
   name: support.function
 
-- comment: String
-  name: string
-  begin: '"'
+- comment: Command
+  begin: '^\t[\ \t]*(@?)'
+  beginCaptures:
+    '1': {name: keyword}
   patterns:
+    - include: "#mk_comment"
+    - include: '#mk_functions'
     - include: '#mk_variable'
-  end: '"'
+    - include: '#mk_string'
+    - include: '#mk_autovar'
+  end: '(?<!\\)\n'
 
 - comment: Rule
   begin: '^(?!\t)\ *(?=([^\:\n\#\s]|(?<=\\)\#)+\ *\:(?!\=).*?$)'
@@ -52,6 +58,7 @@ patterns:
 
 - include: '#mk_variable'
 - include: '#mk_autovar'
+- include: '#mk_string'
 
 repository:
   mk_variable:
@@ -87,4 +94,15 @@ repository:
     match: '\$[\@\%\<\?\^\+\|\*]'
     name: support.constant
 
+  mk_comment:
+    name: comment
+    begin: (?<!\\)\#
+    end: '(?<!\\)\n'
+
+  mk_string:
+    name: "string"
+    begin: '"'
+    patterns:
+      - include: '#mk_variable'
+    end: '"'
 ...
